@@ -20,7 +20,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         todos: [...state.todos, action.data.todo]
-			}
+      }
 
     default:
       return state;
