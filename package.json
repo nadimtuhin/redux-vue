@@ -1,6 +1,6 @@
 {
   "name": "vua-redux",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "vue redux binding higher order component",
   "main": "lib/index.js",
   "scripts": {

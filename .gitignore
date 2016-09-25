@@ -21,8 +21,4 @@ Session.vim
 .netrwhist
 *~
 
-# .gitignore - the files to not push via git
 lib
-
-# .npmignore - the files to not push to NPM
-src/
