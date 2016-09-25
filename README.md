@@ -67,7 +67,7 @@ const App = {
 
 			<div>
 				<input type="text" ref="input" />
-				<button onClick={this.addTodo}>add todo</button>
+				<button on-click={this.addTodo}>add todo</button>
 			</div>
 		</div>
 	}
