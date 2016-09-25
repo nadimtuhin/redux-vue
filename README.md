@@ -9,7 +9,7 @@ install in your root component
 ```js
 // store.js
 import { createStore } from 'redux';
-const AppStore = createStore(function reducer(state = {}, action) {
+const AppStore = createStore(function reducer(state = { todos: [] }, action) {
 	switch(action.type){
 		case 'ADD_TODO':
 			return {
