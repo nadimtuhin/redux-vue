@@ -6,10 +6,10 @@ export default function connect(mapStateAsProps = noop, mapActionsAsProps = noop
     return (children) => {
         
         if(isArray(children.props)){
-            throw Error(`Vua Redux Connected Component can not have props as array component = ${JSON.stringify(component, null, 2)}`)
+            throw Error(`Vua Redux Connected Component can not have props as array `+
+                        `component = ${JSON.stringify(component, null, 2)}`)
         }
 
-        /** @namespace children.collect */
         const props = children.props || {};
         const propsToPass = Object.keys(props).map(key => `:${key}='${key}'`).join(' ');
         const template = `<children ${propsToPass}></children>`;
