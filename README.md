@@ -74,7 +74,7 @@ const App = {
 			</ul>
 
 			<div>
-				<input type="text" ref="input" />
+				<input type="text" />
 				<button on-click={this.addTodo}>add todo</button>
 			</div>
 		</div>
