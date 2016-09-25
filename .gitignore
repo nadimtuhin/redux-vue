@@ -1,0 +1,22 @@
+# Common
+.idea
+.DS_Store
+
+# Logs
+logs
+*.log
+
+# Dependency directory
+node_modules
+bower_components
+
+# Debug log from npm
+npm-debug.log
+
+# Vim
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+*.un~
+Session.vim
+.netrwhist
+*~
