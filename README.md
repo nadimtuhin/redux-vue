@@ -50,7 +50,7 @@ import { connect } from 'vua-redux';
 const App = {
 	props: {
 		todos: {
-			type: Object,
+			type: Array,
 			redux: true
 		},
 		addTodo: {
