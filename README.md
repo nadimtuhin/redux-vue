@@ -68,8 +68,8 @@ const App = {
 	},
 	
 	methods: {
-		handleAddTodo(e) {
-			const todo = e.target.value;
+		handleAddTodo() {
+			const todo = this.$refs.input.value;
 			this.addTodo(todo);
 		}
 	}.
