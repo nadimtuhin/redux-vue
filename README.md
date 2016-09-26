@@ -66,6 +66,13 @@ const App = {
 			redux: true
 		}
 	},
+	
+	methods: {
+		handleAddTodo(e) {
+			const todo = e.target.value;
+			this.addTodo(todo);
+		}
+	}.
 
 	render(h) {
 		return <div>
@@ -74,8 +81,8 @@ const App = {
 			</ul>
 
 			<div>
-				<input type="text" />
-				<button on-click={this.addTodo}>add todo</button>
+				<input type="text" ref="input" />
+				<button on-click={this.handleAddTodo}>add todo</button>
 			</div>
 		</div>
 	}
@@ -89,8 +96,7 @@ function mapStateAsProps(state) {
 
 function mapActionAsProps(dispatch) {
 	return {
-		addTodo(e) {
-			const todo = e.target.value;
+		addTodo(todo) {
 			dispatch({
 				type: 'ADD_TODO',
 				data: { todo }
