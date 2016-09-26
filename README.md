@@ -7,6 +7,24 @@ install through ``npm i vua-redux --save``
 install in your root component
 
 ```js
+// main.js
+import Vue from 'vue';
+import { reduxStorePlugin } from 'vua-redux';
+import AppStore from './AppStore';
+import App from './Component/App';
+
+// install vua-redux
+Vue.use(reduxStorePlugin); 
+
+new Vue({
+    store: AppStore,
+    render(h) {
+    	return <App />
+	}
+});
+```
+
+```js
 // store.js
 import { createStore } from 'redux';
 
@@ -30,23 +48,6 @@ const reducer = (state = initialState, action) => {
 const AppStore = createStore(reducer);
 
 export default AppStore;
-```
-
-```js
-// main.js
-import Vue from 'vue';
-import { reduxStorePlugin } from 'vua-redux';
-import AppStore from './AppStore';
-import App from './Component/App';
-
-Vue.use(reduxStorePlugin);
-
-new Vue({
-    store: AppStore,
-    render(h) {
-    	return <App />
-	}
-});
 ```
 
 ## Use in your component
