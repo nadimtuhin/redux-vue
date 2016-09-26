@@ -1,22 +1,28 @@
 import noop from 'lodash/noop';
 import omitBy from 'lodash/omitBy';
 import isArray from 'lodash/isArray';
+import normalizeProps from './normalizeProps';
 
 export default function connect(mapStateAsProps = noop, mapActionsAsProps = noop) {
     return (children) => {
-        
-        if(isArray(children.props)){
-            throw Error(`Vua Redux Connected Component can not have props as array `+
-                        `component = ${JSON.stringify(component, null, 2)}`)
-        }
-
         const props = children.props || {};
-        const propsToPass = Object.keys(props).map(key => `:${key}='${key}'`).join(' ');
+        const subscriptions = children.collect || {};
+        
+        const allProps = {
+            ...normalizeProps(props),
+            ...normalizeProps(subscriptions)
+        };
+
+
+        const propsToPass = Object.keys(allProps).map(key => `:${key}='${key}'`).join(' ');
         const template = `<children ${propsToPass}></children>`;
+
+        children.props = allProps;
+        delete children.collect;
 
         return {
             template,
-            props: omitBy(props, prop => prop.redux),
+            props: props,
 
             data() {
                 const store = this.$store;
