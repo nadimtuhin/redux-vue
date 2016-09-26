@@ -56,17 +56,15 @@ new Vue({
 import { connect } from 'vua-redux';
 
 const App = {
-	props: {
+	collect: {
 		todos: {
 			type: Array,
-			redux: true
 		},
 		addTodo: {
 			type: Function,
-			redux: true
-		}
+		},
 	},
-	
+
 	methods: {
 		handleAddTodo() {
 			const todo = this.$refs.input.value;
