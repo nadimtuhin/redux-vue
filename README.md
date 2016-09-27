@@ -1,4 +1,5 @@
 # vue redux binding higher order component
+Vua Redux is tested to work on vue v2 and should be used with vue-jsx or in component template string. For more on vue-jsx https://github.com/vuejs/babel-plugin-transform-vue-jsx
 
 ## Install
 install through ``npm i vua-redux --save``
