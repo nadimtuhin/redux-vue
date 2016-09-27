@@ -1,7 +1,15 @@
 {
   "name": "vua-redux",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "vue redux binding higher order component",
+  "author": "Nadim Tuhin",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nadimtuhin/vua-redux.git"
+  },
+  "bugs": "https://github.com/nadimtuhin/vua-redux/issues",
+  "homepage": "http://nadimtuhin.com",
+  "license": "MIT",
   "main": "lib/index.js",
   "scripts": {
     "test": "mocha \"./src/**/*.spec.js\" --compilers js:babel-core/register",
@@ -13,8 +21,6 @@
     "vue",
     "redux"
   ],
-  "author": "Nadim Tuhin",
-  "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.14.0",
     "babel-preset-es2015": "^6.14.0",

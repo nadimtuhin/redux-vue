@@ -57,6 +57,12 @@ export default AppStore;
 import { connect } from 'vua-redux';
 
 const App = {
+	props: ['some-prop', 'another-prop'],
+
+	/**
+	 * everything you do with vue component props
+	 * you can do inside collect key
+	 */
 	collect: {
 		todos: {
 			type: Array,
