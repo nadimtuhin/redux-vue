@@ -53,7 +53,7 @@ export default function connect(mapStateAsProps = noop, mapActionsAsProps = noop
                 });
             },
 
-            destroyed() {
+            beforeDestroy() {
                 this.unsubscribe();
             }
         };
