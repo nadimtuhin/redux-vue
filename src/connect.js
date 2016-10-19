@@ -7,22 +7,31 @@ export default function connect(mapStateAsProps = noop, mapActionsAsProps = noop
     return (children) => {
         const props = children.props || {};
         const subscriptions = children.collect || {};
-        
+
         const allProps = {
             ...normalizeProps(props),
             ...normalizeProps(subscriptions)
         };
 
-
-        const propsToPass = Object.keys(allProps).map(key => `:${key}='${key}'`).join(' ');
-        const template = `<children ${propsToPass}></children>`;
-
         children.props = allProps;
         delete children.collect;
 
         return {
-            template,
+            name: 'VuaRedux',
+
             props: props,
+
+            render(h) {
+                const keys = Object.keys(allProps);
+                let propsToPass = {};
+                for (let i = 0; i < keys.length; i++) {
+                    propsToPass[keys[i]] = this[keys[i]];
+                }
+
+                return h(children, {
+                    props: propsToPass
+                })
+            },
 
             data() {
                 const store = this.$store;
@@ -35,10 +44,6 @@ export default function connect(mapStateAsProps = noop, mapActionsAsProps = noop
                 };
             },
 
-            components: {
-                children
-            },
-
             created() {
                 const store = this.$store;
                 const state = mapStateAsProps(store.getState()) || {};
@@ -47,9 +52,9 @@ export default function connect(mapStateAsProps = noop, mapActionsAsProps = noop
                 this.unsubscribe = store.subscribe(() => {
                     const state = mapStateAsProps(store.getState());
 
-                    stateNames.forEach((key) => { // fixme: use a simple loop
-                        this[key] = state[key];
-                    });
+                    for (let i = 0; i < stateNames.length; i++) {
+                        this[stateNames[i]] = state[stateNames[i]];
+                    }
                 });
             },
 
