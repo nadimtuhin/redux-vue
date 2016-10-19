@@ -1,6 +1,4 @@
 import noop from 'lodash/noop';
-import omitBy from 'lodash/omitBy';
-import isArray from 'lodash/isArray';
 import normalizeProps from './normalizeProps';
 
 export default function connect(mapStateAsProps = noop, mapActionsAsProps = noop) {
