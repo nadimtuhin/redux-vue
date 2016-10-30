@@ -29,7 +29,7 @@ new Vue({
 // store.js
 import { createStore } from 'redux';
 
-cosnt initialState = { 
+const initialState = { 
   todos: [] 
 };
 
