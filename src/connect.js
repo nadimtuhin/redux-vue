@@ -60,11 +60,15 @@ export default function connect(mapStateToProps = noop, mapActionsToProps = noop
 
     /** @namespace children.collect */
     if (children.collect) {
-      console.warn('vua-redux: collect is deprecated, use props');
       children.props = {
         ...normalizeProps(children.props || {}),
         ...normalizeProps(children.collect || {})
-      }
+      };
+
+      const msg = `vua-redux: collect is deprecated, use props ` +
+        `in ${children.name || 'anonymous'} component`;
+
+      console.warn(msg);
     }
 
     return {
