@@ -29,7 +29,7 @@ new Vue({
 // store.js
 import { createStore } from 'redux';
 
-cosnt initialState = { 
+const initialState = { 
   todos: [] 
 };
 
@@ -58,13 +58,7 @@ export default AppStore;
 import { connect } from 'vua-redux';
 
 const App = {
-	props: ['some-prop', 'another-prop'],
-
-	/**
-	 * everything you do with vue component props
-	 * you can do inside collect key
-	 */
-	collect: {
+	props: {
 		todos: {
 			type: Array,
 		},
@@ -78,7 +72,7 @@ const App = {
 			const todo = this.$refs.input.value;
 			this.addTodo(todo);
 		}
-	}.
+	},
 
 	render(h) {
 		return <div>
@@ -94,13 +88,13 @@ const App = {
 	}
 };
 
-function mapStateAsProps(state) {
+function mapStateToProps(state) {
 	return {
 		todos: state.todos
 	};
 }
 
-function mapActionAsProps(dispatch) {
+function mapActionToProps(dispatch) {
 	return {
 		addTodo(todo) {
 			dispatch({
@@ -111,6 +105,6 @@ function mapActionAsProps(dispatch) {
 	}
 }
 
-export default connect(mapStateAsProps, mapActionsAsProps)(App);
+export default connect(mapStateToProps, mapActionToProps)(App);
 
 ```

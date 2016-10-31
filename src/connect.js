@@ -1,64 +1,112 @@
-import noop from 'lodash/noop';
 import normalizeProps from './normalizeProps';
 
-export default function connect(mapStateAsProps = noop, mapActionsAsProps = noop) {
-    return (children) => {
-        const props = children.props || {};
-        const subscriptions = children.collect || {};
+function noop() {
+}
 
-        const allProps = {
-            ...normalizeProps(props),
-            ...normalizeProps(subscriptions)
-        };
+function getStore(component) {
+  return component.$store;
+}
 
-        children.props = allProps;
-        delete children.collect;
+function getAttrs(component) {
+  return component.$parent._vnode.data.attrs;
+}
+
+function getStates(component, mapStateToProps) {
+  const store = getStore(component);
+  const attrs = getAttrs(component);
+
+  return mapStateToProps(store.getState(), attrs) || {};
+}
+
+function getActions(component, mapActionsToProps) {
+  const store = getStore(component);
+
+  return mapActionsToProps(store.dispatch, getAttrs.bind(null, component)) || {};
+}
+
+function getProps(component) {
+  let props = {};
+  const attrs = getAttrs(component);
+  const stateNames = component.vuaReduxStateNames;
+  const actionNames = component.vuaReduxActionNames;
+
+  for (let ii = 0; ii < stateNames.length; ii++) {
+    props[stateNames[ii]] = component[stateNames[ii]];
+  }
+
+  for (let ii = 0; ii < actionNames.length; ii++) {
+    props[actionNames[ii]] = component[actionNames[ii]];
+  }
+
+  return {
+    ...props,
+    ...attrs
+  };
+}
+
+/**
+ * 1. utilities are moved above because vue stores methods, states and props
+ * in the same namespace
+ * 2. actions are set while created
+ */
+
+/**
+ * @param mapStateToProps
+ * @param mapActionsToProps
+ * @returns Object
+ */
+export default function connect(mapStateToProps = noop, mapActionsToProps = noop) {
+  return (children) => {
+
+    /** @namespace children.collect */
+    if (children.collect) {
+      console.warn('vua-redux: collect is deprecated, use props');
+      children.props = {
+        ...normalizeProps(children.props || {}),
+        ...normalizeProps(children.collect || {})
+      }
+    }
+
+    return {
+      name: `ConnectVuaRedux-${children.name || 'children'}`,
+
+      render(h) {
+        const props = getProps(this);
+
+        return h(children, { props });
+      },
+
+      data() {
+        const state = getStates(this, mapStateToProps);
+        const actions = getActions(this, mapActionsToProps);
+        const stateNames = Object.keys(state);
+        const actionNames = Object.keys(actions);
 
         return {
-            name: 'VuaRedux',
-
-            props: props,
-
-            render(h) {
-                const keys = Object.keys(allProps);
-                let propsToPass = {};
-                for (let i = 0; i < keys.length; i++) {
-                    propsToPass[keys[i]] = this[keys[i]];
-                }
-
-                return h(children, {
-                    props: propsToPass
-                })
-            },
-
-            data() {
-                const store = this.$store;
-                const state = mapStateAsProps(store.getState()) || {};
-                const actions = mapActionsAsProps(store.dispatch, store.getState) || {};
-
-                return {
-                    ...state,
-                    ...actions
-                };
-            },
-
-            created() {
-                const store = this.$store;
-                const state = mapStateAsProps(store.getState()) || {};
-                const stateNames = Object.keys(state);
-
-                this.unsubscribe = store.subscribe(() => {
-                    const state = mapStateAsProps(store.getState());
-
-                    for (let i = 0; i < stateNames.length; i++) {
-                        this[stateNames[i]] = state[stateNames[i]];
-                    }
-                });
-            },
-
-            beforeDestroy() {
-                this.unsubscribe();
-            }
+          ...state,
+          ...actions,
+          vuaReduxStateNames: stateNames,
+          vuaReduxActionNames: actionNames
         };
+      },
+
+      created() {
+        const store = getStore(this);
+
+        this.vuaReduxUnsubscribe = store.subscribe(() => {
+          const state = getStates(this, mapStateToProps);
+          const stateNames = Object.keys(state);
+          this.vuaReduxStateNames = stateNames;
+
+          for (let ii = 0; ii < stateNames.length; ii++) {
+            this[stateNames[ii]] = state[stateNames[ii]];
+          }
+        });
+      },
+
+      beforeDestroy() {
+        this.vuaReduxUnsubscribe();
+      }
     };
+  };
 }
