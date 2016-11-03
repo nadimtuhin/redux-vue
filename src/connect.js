@@ -8,7 +8,7 @@ function getStore(component) {
 }
 
 function getAttrs(component) {
-  return component.$parent._vnode.data.attrs;
+  return component._self.$options._parentVnode.data.attrs;
 }
 
 function getStates(component, mapStateToProps) {
