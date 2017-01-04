@@ -55,7 +55,10 @@ function getProps(component) {
  * @param mapActionsToProps
  * @returns Object
  */
-export default function connect(mapStateToProps = noop, mapActionsToProps = noop) {
+export default function connect(mapStateToProps, mapActionsToProps) {
+  mapStateToProps = mapStateToProps || noop;
+  mapActionsToProps = mapActionsToProps || noop;
+
   return (children) => {
 
     /** @namespace children.collect */
