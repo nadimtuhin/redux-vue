@@ -1,6 +1,6 @@
 {
   "name": "vua-redux",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "vue redux binding higher order component",
   "author": "Nadim Tuhin",
   "repository": {
