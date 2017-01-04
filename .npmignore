@@ -1,3 +1,5 @@
 # .npmignore - the files to not push to NPM
 src/
 lib/**/*.spec
+.idea
+node_modules
