@@ -1,8 +1,8 @@
 # vue redux binding higher order component
-Vua Redux is tested to work on vue v2 and should be used with vue-jsx or in component template string. For more on vue-jsx https://github.com/vuejs/babel-plugin-transform-vue-jsx
+Vue Redux is tested to work on vue v2 and should be used with vue-jsx or in component template string. For more on vue-jsx https://github.com/vuejs/babel-plugin-transform-vue-jsx
 
 ## Install
-install through ``npm i vua-redux --save``
+install through ``npm i redux-vue --save``
 
 ## Initialize
 install in your root component
@@ -10,12 +10,12 @@ install in your root component
 ```js
 // main.js
 import Vue from 'vue';
-import { reduxStorePlugin } from 'vua-redux';
+import { reduxStorePlugin } from 'redux-vue';
 import AppStore from './AppStore';
 import App from './Component/App';
 
-// install vua-redux
-Vue.use(reduxStorePlugin); 
+// install redux-vue
+Vue.use(reduxStorePlugin);
 
 new Vue({
     store: AppStore,
@@ -29,8 +29,8 @@ new Vue({
 // store.js
 import { createStore } from 'redux';
 
-const initialState = { 
-  todos: [] 
+const initialState = {
+  todos: []
 };
 
 const reducer = (state = initialState, action) => {
@@ -55,7 +55,7 @@ export default AppStore;
 ```js
 // components/App.js
 
-import { connect } from 'vua-redux';
+import { connect } from 'redux-vue';
 
 const App = {
 	props: {

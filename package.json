@@ -1,13 +1,13 @@
 {
-  "name": "vua-redux",
+  "name": "redux-vue",
   "version": "0.6.1",
-  "description": "vue redux binding higher order component",
+  "description": "Vue Redux binding higher order component",
   "author": "Nadim Tuhin",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nadimtuhin/vua-redux.git"
+    "url": "https://github.com/nadimtuhin/redux-vue.git"
   },
-  "bugs": "https://github.com/nadimtuhin/vua-redux/issues",
+  "bugs": "https://github.com/nadimtuhin/redux-vue/issues",
   "homepage": "http://nadimtuhin.com",
   "license": "MIT",
   "main": "lib/index.js",
@@ -19,7 +19,11 @@
   },
   "keywords": [
     "vue",
-    "redux"
+    "redux",
+    "vue-redux",
+    "redux-vue",
+    "flux",
+    "immutable"
   ],
   "devDependencies": {
     "babel-cli": "^6.14.0",
