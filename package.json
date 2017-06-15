@@ -6,9 +6,9 @@
   "contributor": "Sazzad Hossain Khan",
   "repository": {
     "type": "git",
-    "url": "https://github.com/itsazzad/redux-vue.git"
+    "url": "https://github.com/itsazzad/redux-vue-connect.git"
   },
-  "bugs": "https://github.com/itsazzad/redux-vue/issues",
+  "bugs": "https://github.com/itsazzad/redux-vue-connect/issues",
   "homepage": "https://github.com/itsazzad",
   "license": "MIT",
   "main": "lib/index.js",
@@ -23,6 +23,7 @@
     "redux",
     "vue-redux",
     "redux-vue",
+    "redux-vue-connect",
     "flux",
     "immutable"
   ],
