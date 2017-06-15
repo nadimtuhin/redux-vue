@@ -1,6 +1,6 @@
 {
   "name": "redux-vue-connect",
-  "version": "0.7.3",
+  "version": "0.7.4",
   "description": "Vue Redux binding higher order component",
   "author": "Sazzad Hossain Khan",
   "contributor": "Sazzad Hossain Khan",
