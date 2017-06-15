@@ -1,14 +1,14 @@
 {
-  "name": "redux-vue",
-  "version": "0.7.1",
+  "name": "redux-vue-connect",
+  "version": "0.7.3",
   "description": "Vue Redux binding higher order component",
   "author": "Nadim Tuhin",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nadimtuhin/redux-vue.git"
+    "url": "https://github.com/itsazzad/redux-vue.git"
   },
-  "bugs": "https://github.com/nadimtuhin/redux-vue/issues",
-  "homepage": "http://nadimtuhin.com",
+  "bugs": "https://github.com/itsazzad/redux-vue/issues",
+  "homepage": "https://github.com/itsazzad",
   "license": "MIT",
   "main": "lib/index.js",
   "scripts": {
