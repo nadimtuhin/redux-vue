@@ -113,7 +113,9 @@ export default function connect(mapStateToProps, mapActionsToProps) {
 
       beforeDestroy() {
         this.vuaReduxUnsubscribe();
-      }
+      },
+
+      methods: children.methods
     };
   };
 }
