@@ -1,5 +1,8 @@
 Originated from Nadim Tuhin's https://github.com/nadimtuhin/redux-vue
 
+#TODO
+- Need to have an exact copy of the parent component during extend 
+
 # vue redux binding higher order component
 Vue Redux is tested to work on vue v2 and should be used with vue-jsx or in component template string. For more on vue-jsx https://github.com/vuejs/babel-plugin-transform-vue-jsx
 
