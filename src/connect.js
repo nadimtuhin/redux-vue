@@ -68,14 +68,14 @@ export default function connect(mapStateToProps, mapActionsToProps) {
         ...normalizeProps(children.collect || {})
       };
 
-      const msg = `vua-redux: collect is deprecated, use props ` +
+      const msg = `redux-vue-connect: collect is deprecated, use props ` +
         `in ${children.name || 'anonymous'} component`;
 
       console.warn(msg);
     }
 
     return {
-      name: `ConnectVuaRedux-${children.name || 'children'}`,
+      name: `ReduxVueConnect-${children.name || 'children'}`,
 
       render(h) {
         const props = getProps(this);
