@@ -44,6 +44,13 @@ function getProps(component) {
   };
 }
 
+function defaultMergeProps(stateProps, actionsProps) {
+  return {
+    ...stateProps,
+    ...actionsProps,
+  };
+}
+
 /**
  * 1. utilities are moved above because vue stores methods, states and props
  * in the same namespace
@@ -53,11 +60,13 @@ function getProps(component) {
 /**
  * @param mapStateToProps
  * @param mapActionsToProps
+ * @param mergeProps
  * @returns Object
  */
-export default function connect(mapStateToProps, mapActionsToProps) {
+export default function connect(mapStateToProps, mapActionsToProps, mergeProps) {
   mapStateToProps = mapStateToProps || noop;
   mapActionsToProps = mapActionsToProps || noop;
+  mergeProps = mergeProps || defaultMergeProps;
 
   return (children) => {
 
@@ -90,8 +99,7 @@ export default function connect(mapStateToProps, mapActionsToProps) {
         const actionNames = Object.keys(actions);
 
         return {
-          ...state,
-          ...actions,
+          ...mergeProps(state, actions),
           vuaReduxStateNames: stateNames,
           vuaReduxActionNames: actionNames
         };

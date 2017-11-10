@@ -102,10 +102,17 @@ function mapActionToProps(dispatch) {
 				data: { todo }
 			})
 		}
-	}
+	};
 }
 
-export default connect(mapStateToProps, mapActionToProps)(App);
+function mergeProps(stateProps, actionsProps) {
+  return {
+    ...stateProps,
+    ...actionsProps,
+  };
+}
+
+export default connect(mapStateToProps, mapActionToProps, mergeProps)(App);
 
 ```
 
