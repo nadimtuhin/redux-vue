@@ -27,15 +27,10 @@ function getActions(component, mapActionsToProps) {
 function getProps(component) {
   let props = {};
   const attrs = getAttrs(component);
-  const stateNames = component.vuaReduxStateNames;
-  const actionNames = component.vuaReduxActionNames;
+  const propNames = component.vuaReduxPropNames;
 
-  for (let ii = 0; ii < stateNames.length; ii++) {
-    props[stateNames[ii]] = component[stateNames[ii]];
-  }
-
-  for (let ii = 0; ii < actionNames.length; ii++) {
-    props[actionNames[ii]] = component[actionNames[ii]];
+  for (let ii = 0; ii < propNames.length; ii++) {
+    props[propNames[ii]] = component[propNames[ii]];
   }
 
   return {
@@ -95,13 +90,12 @@ export default function connect(mapStateToProps, mapActionsToProps, mergeProps) 
       data() {
         const state = getStates(this, mapStateToProps);
         const actions = getActions(this, mapActionsToProps);
-        const stateNames = Object.keys(state);
-        const actionNames = Object.keys(actions);
+        const merged = mergeProps(state, actions);
+        const propNames = Object.keys(merged);
 
         return {
           ...mergeProps(state, actions),
-          vuaReduxStateNames: stateNames,
-          vuaReduxActionNames: actionNames
+          vuaReduxPropNames: propNames,
         };
       },
 
@@ -110,11 +104,13 @@ export default function connect(mapStateToProps, mapActionsToProps, mergeProps) 
 
         this.vuaReduxUnsubscribe = store.subscribe(() => {
           const state = getStates(this, mapStateToProps);
-          const stateNames = Object.keys(state);
-          this.vuaReduxStateNames = stateNames;
+          const actions = getActions(this, mapActionsToProps);
+          const merged = mergeProps(state, actions);
+          const propNames = Object.keys(merged);
+          this.vuaReduxPropNames = propNames;
 
-          for (let ii = 0; ii < stateNames.length; ii++) {
-            this[stateNames[ii]] = state[stateNames[ii]];
+          for (let ii = 0; ii < propNames.length; ii++) {
+            this[propNames[ii]] = state[propNames[ii]];
           }
         });
       },
