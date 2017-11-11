@@ -94,7 +94,7 @@ export default function connect(mapStateToProps, mapActionsToProps, mergeProps) 
         const propNames = Object.keys(merged);
 
         return {
-          ...mergeProps(state, actions),
+          ...merged,
           vuaReduxPropNames: propNames,
         };
       },
@@ -110,7 +110,7 @@ export default function connect(mapStateToProps, mapActionsToProps, mergeProps) 
           this.vuaReduxPropNames = propNames;
 
           for (let ii = 0; ii < propNames.length; ii++) {
-            this[propNames[ii]] = state[propNames[ii]];
+            this[propNames[ii]] = merged[propNames[ii]];
           }
         });
       },
