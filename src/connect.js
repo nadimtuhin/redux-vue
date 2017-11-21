@@ -9,6 +9,9 @@ function getStore(component) {
 
 function getAttrs(component) {
   const attrs = component._self.$options._parentVnode.data.attrs;
+  if (!attrs) {
+    return attrs
+  }
   // Convert props from kebab-case to camelCase notation
   return Object.keys(attrs).reduce((memo, key) => ({
     ...memo,
