@@ -8,7 +8,12 @@ function getStore(component) {
 }
 
 function getAttrs(component) {
-  return component._self.$options._parentVnode.data.attrs;
+  const attrs = component._self.$options._parentVnode.data.attrs;
+  // Convert props from kebab-case to camelCase notation
+  return Object.keys(attrs).reduce((memo, key) => ({
+    ...memo,
+    [key.replace(/[-](.)/g, (match, group) => group.toUpperCase())]: attrs[key],
+  }), {})
 }
 
 function getStates(component, mapStateToProps) {
