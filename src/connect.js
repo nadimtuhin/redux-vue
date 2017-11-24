@@ -47,6 +47,13 @@ function getProps(component) {
   };
 }
 
+function getSlots(component) {
+  return Object.keys(component.$slots).reduce((memo, name) => ({
+    ...memo,
+    [name]: () => component.$slots[name],
+  }), {})
+}
+
 function defaultMergeProps(stateProps, actionsProps) {
   return {
     ...stateProps,
@@ -90,9 +97,10 @@ export default function connect(mapStateToProps, mapActionsToProps, mergeProps) 
       name: `ConnectVuaRedux-${children.name || 'children'}`,
 
       render(h) {
-        const props = getProps(this);
-
-        return h(children, { props });
+        return h(children, {
+          props: getProps(this),
+          scopedSlots: getSlots(this),
+        });
       },
 
       data() {
