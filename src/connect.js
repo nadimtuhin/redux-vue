@@ -27,8 +27,8 @@ function getActions(component, mapActionsToProps) {
 function getProps(component) {
   let props = {};
   const attrs = getAttrs(component);
-  const stateNames = component.vuaReduxStateNames;
-  const actionNames = component.vuaReduxActionNames;
+  const stateNames = component.vueReduxStateNames;
+  const actionNames = component.vueReduxActionNames;
 
   for (let ii = 0; ii < stateNames.length; ii++) {
     props[stateNames[ii]] = component[stateNames[ii]];
@@ -92,18 +92,18 @@ export default function connect(mapStateToProps, mapActionsToProps) {
         return {
           ...state,
           ...actions,
-          vuaReduxStateNames: stateNames,
-          vuaReduxActionNames: actionNames
+          vueReduxStateNames: stateNames,
+          vueReduxActionNames: actionNames
         };
       },
 
       created() {
         const store = getStore(this);
 
-        this.vuaReduxUnsubscribe = store.subscribe(() => {
+        this.vueReduxUnsubscribe = store.subscribe(() => {
           const state = getStates(this, mapStateToProps);
           const stateNames = Object.keys(state);
-          this.vuaReduxStateNames = stateNames;
+          this.vueReduxStateNames = stateNames;
 
           for (let ii = 0; ii < stateNames.length; ii++) {
             this[stateNames[ii]] = state[stateNames[ii]];
@@ -112,7 +112,7 @@ export default function connect(mapStateToProps, mapActionsToProps) {
       },
 
       beforeDestroy() {
-        this.vuaReduxUnsubscribe();
+        this.vueReduxUnsubscribe();
       },
 
       methods: children.methods
