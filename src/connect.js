@@ -8,7 +8,15 @@ function getStore(component) {
 }
 
 function getAttrs(component) {
-  return component._self.$options._parentVnode.data.attrs;
+  const attrs = component._self.$options._parentVnode.data.attrs;
+  if (!attrs) {
+    return attrs
+  }
+  // Convert props from kebab-case to camelCase notation
+  return Object.keys(attrs).reduce((memo, key) => ({
+    ...memo,
+    [key.replace(/[-](.)/g, (match, group) => group.toUpperCase())]: attrs[key],
+  }), {})
 }
 
 function getStates(component, mapStateToProps) {
@@ -27,20 +35,29 @@ function getActions(component, mapActionsToProps) {
 function getProps(component) {
   let props = {};
   const attrs = getAttrs(component);
-  const stateNames = component.vuaReduxStateNames;
-  const actionNames = component.vuaReduxActionNames;
+  const propNames = component.vuaReduxPropNames;
 
-  for (let ii = 0; ii < stateNames.length; ii++) {
-    props[stateNames[ii]] = component[stateNames[ii]];
-  }
-
-  for (let ii = 0; ii < actionNames.length; ii++) {
-    props[actionNames[ii]] = component[actionNames[ii]];
+  for (let ii = 0; ii < propNames.length; ii++) {
+    props[propNames[ii]] = component[propNames[ii]];
   }
 
   return {
     ...props,
     ...attrs
+  };
+}
+
+function getSlots(component) {
+  return Object.keys(component.$slots).reduce((memo, name) => ({
+    ...memo,
+    [name]: () => component.$slots[name],
+  }), {})
+}
+
+function defaultMergeProps(stateProps, actionsProps) {
+  return {
+    ...stateProps,
+    ...actionsProps,
   };
 }
 
@@ -53,11 +70,13 @@ function getProps(component) {
 /**
  * @param mapStateToProps
  * @param mapActionsToProps
+ * @param mergeProps
  * @returns Object
  */
-export default function connect(mapStateToProps, mapActionsToProps) {
+export default function connect(mapStateToProps, mapActionsToProps, mergeProps) {
   mapStateToProps = mapStateToProps || noop;
   mapActionsToProps = mapActionsToProps || noop;
+  mergeProps = mergeProps || defaultMergeProps;
 
   return (children) => {
 
@@ -78,22 +97,21 @@ export default function connect(mapStateToProps, mapActionsToProps) {
       name: `ConnectVuaRedux-${children.name || 'children'}`,
 
       render(h) {
-        const props = getProps(this);
-
-        return h(children, { props });
+        return h(children, {
+          props: getProps(this),
+          scopedSlots: getSlots(this),
+        });
       },
 
       data() {
         const state = getStates(this, mapStateToProps);
         const actions = getActions(this, mapActionsToProps);
-        const stateNames = Object.keys(state);
-        const actionNames = Object.keys(actions);
+        const merged = mergeProps(state, actions);
+        const propNames = Object.keys(merged);
 
         return {
-          ...state,
-          ...actions,
-          vuaReduxStateNames: stateNames,
-          vuaReduxActionNames: actionNames
+          ...merged,
+          vuaReduxPropNames: propNames,
         };
       },
 
@@ -102,11 +120,13 @@ export default function connect(mapStateToProps, mapActionsToProps) {
 
         this.vuaReduxUnsubscribe = store.subscribe(() => {
           const state = getStates(this, mapStateToProps);
-          const stateNames = Object.keys(state);
-          this.vuaReduxStateNames = stateNames;
+          const actions = getActions(this, mapActionsToProps);
+          const merged = mergeProps(state, actions);
+          const propNames = Object.keys(merged);
+          this.vuaReduxPropNames = propNames;
 
-          for (let ii = 0; ii < stateNames.length; ii++) {
-            this[stateNames[ii]] = state[stateNames[ii]];
+          for (let ii = 0; ii < propNames.length; ii++) {
+            this[propNames[ii]] = merged[propNames[ii]];
           }
         });
       },

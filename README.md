@@ -102,7 +102,7 @@ function mapActionToProps(dispatch) {
 				data: { todo }
 			})
 		}
-	}
+	};
 }
 
 export default connect(mapStateToProps, mapActionToProps)(App);
@@ -141,3 +141,10 @@ const mapDispatchToProps = (dispatch) => ({})
 
 export default connect(mapStateToProps, mapDispatchToProps)(Comp)
 ```
+
+## connect([mapStateToProps], [mapDispatchToProps], [mergeProps])
+Connects a Vue component to a Redux store.
+### Arguments
+* [mapStateToProps(state, [ownAttrs]): stateProps] (__Function__) Subscribes component to Redux store updates. This means that any time the store is updated, mapStateToProps will be called. The results of `mapStateToProps` must be a plain object, which will be merged into the component’s props.
+* [mapDispatchToProps(dispatch): dispatchProps] (__Function__) Result must be a plain object
+* [mergeProps(stateProps, dispatchProps): props] (__Function__) If specified, it is passed the result of `mapStateToProps()` and `mapDispatchToProps()`. The plain object you return from it will be passed as props to the wrapped component.
