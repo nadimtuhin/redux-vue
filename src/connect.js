@@ -3,6 +3,7 @@ import normalizeProps from './normalizeProps';
 function noop() {
 }
 
+//to get the store for connecting redux
 function getStore(component) {
   return component.$store;
 }
