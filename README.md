@@ -4,7 +4,7 @@ Originated from Nadim Tuhin's https://github.com/nadimtuhin/redux-vue
 - Need to have an exact copy of the parent component during extend 
 
 # vue redux binding higher order component
-Vue Redux is tested to work on vue v2 and should be used with vue-jsx or in component template string. For more on vue-jsx https://github.com/vuejs/babel-plugin-transform-vue-jsx
+Vue Redux is tested to work on vue v2 and should be used with vue-jsx, component template string or single-file components. For more on vue-jsx https://github.com/vuejs/babel-plugin-transform-vue-jsx
 
 ## Install
 install through ``npm i redux-vue-connect --save``
@@ -112,4 +112,37 @@ function mapActionToProps(dispatch) {
 
 export default connect(mapStateToProps, mapActionToProps)(App);
 
+```
+
+## If you prefer to use single-file components
+```js
+// components/Comp.js
+<template>
+  <div>
+    Hello world!
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'my-comp',
+}
+</script>
+
+<style >
+</style>
+```
+
+```js
+// components/App.js
+import { connect } from 'redux-vue'
+
+import Comp from './Comp'
+
+
+const mapStateToProps = (state) => ({})
+
+const mapDispatchToProps = (dispatch) => ({})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Comp)
 ```
