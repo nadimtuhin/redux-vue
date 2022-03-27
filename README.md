@@ -1,8 +1,13 @@
+Originated from Nadim Tuhin's https://github.com/nadimtuhin/redux-vue
+
+#TODO
+- Need to have an exact copy of the parent component during extend 
+
 # vue redux binding higher order component
 Vue Redux is tested to work on vue v2 and should be used with vue-jsx, component template string or single-file components. For more on vue-jsx https://github.com/vuejs/babel-plugin-transform-vue-jsx
 
 ## Install
-install through ``npm i redux-vue --save``
+install through ``npm i redux-vue-connect --save``
 
 ## Initialize
 install in your root component
@@ -10,11 +15,11 @@ install in your root component
 ```js
 // main.js
 import Vue from 'vue';
-import { reduxStorePlugin } from 'redux-vue';
+import { reduxStorePlugin } from 'redux-vue-connect';
 import AppStore from './AppStore';
 import App from './Component/App';
 
-// install redux-vue
+// install redux-vue-connect
 Vue.use(reduxStorePlugin);
 
 new Vue({
@@ -55,7 +60,7 @@ export default AppStore;
 ```js
 // components/App.js
 
-import { connect } from 'redux-vue';
+import { connect } from 'redux-vue-connect';
 
 const App = {
 	props: {
