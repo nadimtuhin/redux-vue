@@ -1,17 +1,29 @@
+# Credentials & Secrets
+.env*
+*.key
+*.pem
+
 # Common
 .idea
 .DS_Store
+Thumbs.db
 
 # Logs
 logs
 *.log
+npm-debug.log
 
 # Dependency directory
 node_modules
 bower_components
 
-# Debug log from npm
-npm-debug.log
+# Build & Output
+lib
+dist/
+build/
+out/
+coverage/
+.nyc_output/
 
 # Vim
 [._]*.s[a-w][a-z]
@@ -20,5 +32,3 @@ npm-debug.log
 Session.vim
 .netrwhist
 *~
-
-lib
