@@ -26,7 +26,9 @@
     "immutable"
   ],
   "devDependencies": {
+    "@babel/cli": "^8.0.1",
     "@babel/core": "^8.0.1",
+    "@babel/plugin-proposal-export-default-from": "^8.0.1",
     "@babel/preset-env": "^8.0.2",
     "@babel/register": "^8.0.1",
     "expect": "^1.20.2",
