@@ -94,11 +94,11 @@ export default connect(mapStateToProps, mapDispatchToProps)(Comp);
 
 ### `connect([mapStateToProps], [mapDispatchToProps], [mergeProps])(Component)`
 
-| Argument                               | Type               | Description                                                  |
-| -------------------------------------- | ------------------ | ------------------------------------------------------------ |
-| `mapStateToProps(state, ownAttrs)`     | Function           | Maps store state to props. Called on every store update.     |
-| `mapDispatchToProps(dispatch)`         | Function           | Maps dispatch calls to props.                                |
-| `mergeProps(stateProps, dispatchProps)` | Function _(optional)_ | Combine or rename keys before they reach the child.       |
+| Argument                                | Type                  | Description                                              |
+| --------------------------------------- | --------------------- | -------------------------------------------------------- |
+| `mapStateToProps(state, ownAttrs)`      | Function              | Maps store state to props. Called on every store update. |
+| `mapDispatchToProps(dispatch)`          | Function              | Maps dispatch calls to props.                            |
+| `mergeProps(stateProps, dispatchProps)` | Function _(optional)_ | Combine or rename keys before they reach the child.      |
 
 **Pass-through props** — props not declared in the map functions are forwarded to
 the wrapped component automatically.
