@@ -141,3 +141,45 @@ const mapDispatchToProps = (dispatch) => ({})
 
 export default connect(mapStateToProps, mapDispatchToProps)(Comp)
 ```
+
+## API
+
+### `connect([mapStateToProps], [mapDispatchToProps], [mergeProps])(Component)`
+
+Connects a Vue component to a Redux store.
+
+**Arguments**
+
+- `mapStateToProps(state, [ownAttrs]) => Object` — subscribes the component to store updates. Return value is merged into the component's props.
+- `mapDispatchToProps(dispatch) => Object` — result is merged into the component's props.
+- `mergeProps(stateProps, dispatchProps) => Object` _(optional)_ — if provided, receives the results of the two mappers and its return value is used as the final props object. Useful for combining or renaming keys before they reach the child.
+
+**Unmapped props (pass-through)**
+
+Any props passed to the connected component that are not declared in `mapStateToProps` or `mapDispatchToProps` are forwarded to the wrapped component automatically.
+
+```js
+// nonMappedProp is not in mapStateToProps — it still reaches App
+<ConnectedApp nonMappedProp="Foo" />
+```
+
+**Slots**
+
+Slots defined on the connected component are forwarded to the wrapped component.
+
+```js
+<ConnectedApp>
+  <span>This slot content is forwarded</span>
+</ConnectedApp>
+```
+
+**mergeProps example**
+
+```js
+const mergeProps = (stateProps, dispatchProps) => ({
+  fullCount: stateProps.count * 2,
+  onAdd: dispatchProps.addTodo,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(App);
+```
