@@ -1,21 +1,17 @@
 ---
 name: Bug report
-about: Something isn't working as expected
+about: Something broken? Let us know.
+labels: bug
 ---
 
 **redux-vue version:**
 **Vue version:**
+**redux version:**
 
-**Describe the bug**
-A clear description of what the bug is.
+**Steps to reproduce:**
 
-**Minimal reproduction**
-```js
-// paste snippet or link to repo
-```
+**Expected behaviour:**
 
-**Expected behaviour**
+**Actual behaviour:**
 
-**Actual behaviour**
-
-**Additional context**
+**Minimal reproduction (snippet or repo link):**

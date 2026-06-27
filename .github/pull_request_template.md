@@ -1,14 +1,8 @@
-## Summary
-
-<!-- What does this PR do? -->
-
-## Related issue
-
-Closes #
+## Description
 
 ## Checklist
 
-- [ ] Tests written first (RED), then implementation (GREEN)
-- [ ] All tests pass (`npm test`)
+- [ ] Tests added or updated
+- [ ] `npm test` passes locally
 - [ ] README updated if API changed
-- [ ] Commit messages follow `fix:`/`feat:`/`docs:` convention
+- [ ] No secrets or hardcoded URLs introduced

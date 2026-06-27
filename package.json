@@ -8,11 +8,11 @@
     "url": "https://github.com/nadimtuhin/redux-vue.git"
   },
   "bugs": "https://github.com/nadimtuhin/redux-vue/issues",
-  "homepage": "http://nadimtuhin.com",
+  "homepage": "https://github.com/nadimtuhin/redux-vue#readme",
   "license": "MIT",
   "main": "lib/index.js",
   "scripts": {
-    "test": "mocha \"./src/**/*.spec.js\" --compilers js:babel-core/register",
+    "test": "mocha \"./src/**/*.spec.js\" --require @babel/register",
     "test:watch": "npm test -- --watch",
     "compile": "babel -d lib/ src/",
     "prepublish": "npm run compile"
@@ -26,14 +26,11 @@
     "immutable"
   ],
   "devDependencies": {
-    "babel-cli": "^6.14.0",
-    "babel-preset-es2015": "^6.14.0",
-    "babel-preset-stage-0": "^6.5.0",
+    "@babel/core": "^8.0.1",
+    "@babel/preset-env": "^8.0.2",
+    "@babel/register": "^8.0.1",
     "expect": "^1.20.2",
-    "mocha": "^3.0.2",
+    "mocha": "^11.7.6",
     "redux": "^5.0.1"
-  },
-  "dependencies": {
-    "lodash": "^4.17.4"
   }
 }
