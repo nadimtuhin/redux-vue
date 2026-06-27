@@ -18,6 +18,8 @@ components to a Redux store, similar to `react-redux`'s `connect()`.
 npm install redux-vue
 # or
 yarn add redux-vue
+# or
+pnpm add redux-vue
 ```
 
 ## Setup
