@@ -8,7 +8,7 @@
     "url": "https://github.com/nadimtuhin/redux-vue.git"
   },
   "bugs": "https://github.com/nadimtuhin/redux-vue/issues",
-  "homepage": "http://nadimtuhin.com",
+  "homepage": "https://github.com/nadimtuhin/redux-vue#readme",
   "license": "MIT",
   "main": "lib/index.js",
   "scripts": {

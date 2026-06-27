@@ -1,179 +1,114 @@
-# vue redux binding higher order component
-Vue Redux is tested to work on vue v2 and should be used with vue-jsx, component template string or single-file components. For more on vue-jsx https://github.com/vuejs/babel-plugin-transform-vue-jsx
+# redux-vue
+
+[![npm](https://img.shields.io/npm/v/redux-vue.svg)](https://www.npmjs.com/package/redux-vue)
+[![npm downloads](https://img.shields.io/npm/dm/redux-vue.svg)](https://www.npmjs.com/package/redux-vue)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+Redux bindings for **Vue 2** — a higher-order component (HOC) that connects Vue components to a Redux store, similar to `react-redux`'s `connect()`.
+
+> **Vue 2 only.** This library targets Vue 2.x. For Vue 3, use Pinia or the official `vuex` 4.x.
+
+---
 
 ## Install
-install through ``npm i redux-vue --save``
 
-## Initialize
-install in your root component
+```bash
+npm install redux-vue
+# or
+yarn add redux-vue
+```
+
+## Setup
+
+Register the plugin on your root Vue instance so all child components can access the store:
 
 ```js
 // main.js
 import Vue from 'vue';
 import { reduxStorePlugin } from 'redux-vue';
-import AppStore from './AppStore';
-import App from './Component/App';
+import store from './store';
+import App from './App';
 
-// install redux-vue
 Vue.use(reduxStorePlugin);
 
 new Vue({
-    store: AppStore,
-    render(h) {
-    	return <App />
-	}
+  store,
+  render: h => h(App),
 });
 ```
 
+## Usage
+
+### `connect(mapStateToProps, mapDispatchToProps, [mergeProps])(Component)`
+
+Wraps a Vue component and injects store state and dispatch functions as props.
+
 ```js
-// store.js
-import { createStore } from 'redux';
-
-const initialState = {
-  todos: []
-};
-
-const reducer = (state = initialState, action) => {
-  switch(action.type){
-    case 'ADD_TODO':
-      return {
-        ...state,
-        todos: [...state.todos, action.data.todo]
-      }
-
-    default:
-      return state;
-    }
-}
-
-const AppStore = createStore(reducer);
-
-export default AppStore;
-```
-
-## Use in your component
-```js
-// components/App.js
-
+// components/TodoApp.js
 import { connect } from 'redux-vue';
 
-const App = {
-	props: {
-		todos: {
-			type: Array,
-		},
-		addTodo: {
-			type: Function,
-		},
-	},
-
-	methods: {
-		handleAddTodo() {
-			const todo = this.$refs.input.value;
-			this.addTodo(todo);
-		}
-	},
-
-	render(h) {
-		return <div>
-			<ul>
-				{this.todos.map(todo => <li>{todo}</li>)}
-			</ul>
-
-			<div>
-				<input type="text" ref="input" />
-				<button on-click={this.handleAddTodo}>add todo</button>
-			</div>
-		</div>
-	}
+const TodoApp = {
+  props: {
+    todos: { type: Array },
+    addTodo: { type: Function },
+  },
+  render(h) {
+    return (
+      <div>
+        <ul>{this.todos.map(t => <li>{t}</li>)}</ul>
+        <button onClick={() => this.addTodo('new item')}>Add</button>
+      </div>
+    );
+  },
 };
 
-function mapStateToProps(state) {
-	return {
-		todos: state.todos
-	};
-}
+const mapStateToProps = state => ({ todos: state.todos });
 
-function mapActionToProps(dispatch) {
-	return {
-		addTodo(todo) {
-			dispatch({
-				type: 'ADD_TODO',
-				data: { todo }
-			})
-		}
-	}
-}
+const mapDispatchToProps = dispatch => ({
+  addTodo: todo => dispatch({ type: 'ADD_TODO', payload: todo }),
+});
 
-export default connect(mapStateToProps, mapActionToProps)(App);
-
+export default connect(mapStateToProps, mapDispatchToProps)(TodoApp);
 ```
 
-## If you prefer to use single-file components
-```js
-// components/Comp.js
-<template>
-  <div>
-    Hello world!
-  </div>
-</template>
-
-<script>
-export default {
-  name: 'my-comp',
-}
-</script>
-
-<style >
-</style>
-```
+### Single-file components
 
 ```js
 // components/App.js
-import { connect } from 'redux-vue'
+import { connect } from 'redux-vue';
+import Comp from './Comp.vue';
 
-import Comp from './Comp'
+const mapStateToProps = state => ({ count: state.count });
+const mapDispatchToProps = dispatch => ({ increment: () => dispatch({ type: 'INCREMENT' }) });
 
-
-const mapStateToProps = (state) => ({})
-
-const mapDispatchToProps = (dispatch) => ({})
-
-export default connect(mapStateToProps, mapDispatchToProps)(Comp)
+export default connect(mapStateToProps, mapDispatchToProps)(Comp);
 ```
+
+---
 
 ## API
 
 ### `connect([mapStateToProps], [mapDispatchToProps], [mergeProps])(Component)`
 
-Connects a Vue component to a Redux store.
+| Argument | Type | Description |
+|---|---|---|
+| `mapStateToProps(state, ownAttrs)` | Function | Maps store state to props. Called on every store update. |
+| `mapDispatchToProps(dispatch)` | Function | Maps dispatch calls to props. |
+| `mergeProps(stateProps, dispatchProps)` | Function _(optional)_ | Combine or rename keys before they reach the child. |
 
-**Arguments**
+**Pass-through props** — any props not declared in the map functions are forwarded to the wrapped component automatically.
 
-- `mapStateToProps(state, [ownAttrs]) => Object` — subscribes the component to store updates. Return value is merged into the component's props.
-- `mapDispatchToProps(dispatch) => Object` — result is merged into the component's props.
-- `mergeProps(stateProps, dispatchProps) => Object` _(optional)_ — if provided, receives the results of the two mappers and its return value is used as the final props object. Useful for combining or renaming keys before they reach the child.
+**Slots** — slot content defined on the connected wrapper is forwarded to the inner component.
 
-**Unmapped props (pass-through)**
+### `reduxStorePlugin`
 
-Any props passed to the connected component that are not declared in `mapStateToProps` or `mapDispatchToProps` are forwarded to the wrapped component automatically.
+A Vue plugin. Call `Vue.use(reduxStorePlugin)` once with `store` set on the root instance. All descendant components will have `this.$store` available.
 
-```js
-// nonMappedProp is not in mapStateToProps — it still reaches App
-<ConnectedApp nonMappedProp="Foo" />
-```
+---
 
-**Slots**
+## Examples
 
-Slots defined on the connected component are forwarded to the wrapped component.
-
-```js
-<ConnectedApp>
-  <span>This slot content is forwarded</span>
-</ConnectedApp>
-```
-
-**mergeProps example**
+### `mergeProps`
 
 ```js
 const mergeProps = (stateProps, dispatchProps) => ({
@@ -183,3 +118,59 @@ const mergeProps = (stateProps, dispatchProps) => ({
 
 export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(App);
 ```
+
+### Pass-through props
+
+```html
+<!-- nonMappedProp is not in mapStateToProps — it still reaches the wrapped component -->
+<ConnectedApp nonMappedProp="Foo" />
+```
+
+### Slots
+
+```html
+<ConnectedApp>
+  <span>This slot content is forwarded to the inner component</span>
+</ConnectedApp>
+```
+
+---
+
+## Store example
+
+```js
+// store.js
+import { createStore } from 'redux';
+
+const initialState = { todos: [] };
+
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
+    case 'ADD_TODO':
+      return { ...state, todos: [...state.todos, action.payload] };
+    default:
+      return state;
+  }
+};
+
+export default createStore(reducer);
+```
+
+---
+
+## Development
+
+```bash
+git clone https://github.com/nadimtuhin/redux-vue.git
+cd redux-vue
+npm install
+npm test
+```
+
+Tests live in `src/*.spec.js` and use Mocha. See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
+
+---
+
+## License
+
+[MIT](LICENSE) © Nadim Tuhin
