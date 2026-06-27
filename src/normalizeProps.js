@@ -1,5 +1,5 @@
-import isArray from 'lodash/isArray';
-import isPlainObject from 'lodash/isPlainObject';
+const isArray = Array.isArray;
+const isPlainObject = v => v !== null && typeof v === 'object' && Object.getPrototypeOf(v) === Object.prototype;
 
 // https://github.com/vuejs/vue/blob/dev/src/util/options.js
 export default function normalizeProps(props) {
