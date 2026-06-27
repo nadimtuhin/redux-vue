@@ -4,9 +4,10 @@
 [![npm downloads](https://img.shields.io/npm/dm/redux-vue.svg)](https://www.npmjs.com/package/redux-vue)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-Redux bindings for **Vue 2** — a higher-order component (HOC) that connects Vue components to a Redux store, similar to `react-redux`'s `connect()`.
+Redux bindings for **Vue 2** — a higher-order component (HOC) that connects Vue
+components to a Redux store, similar to `react-redux`'s `connect()`.
 
-> **Vue 2 only.** This library targets Vue 2.x. For Vue 3, use Pinia or the official `vuex` 4.x.
+> **Vue 2 only.** This library targets Vue 2.x. For Vue 3, use Pinia or `vuex` 4.x.
 
 ---
 
@@ -20,7 +21,8 @@ yarn add redux-vue
 
 ## Setup
 
-Register the plugin on your root Vue instance so all child components can access the store:
+Register the plugin on your root Vue instance so all child components can access
+the store:
 
 ```js
 // main.js
@@ -79,7 +81,9 @@ import { connect } from 'redux-vue';
 import Comp from './Comp.vue';
 
 const mapStateToProps = state => ({ count: state.count });
-const mapDispatchToProps = dispatch => ({ increment: () => dispatch({ type: 'INCREMENT' }) });
+const mapDispatchToProps = dispatch => ({
+  increment: () => dispatch({ type: 'INCREMENT' }),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Comp);
 ```
@@ -90,19 +94,21 @@ export default connect(mapStateToProps, mapDispatchToProps)(Comp);
 
 ### `connect([mapStateToProps], [mapDispatchToProps], [mergeProps])(Component)`
 
-| Argument | Type | Description |
-|---|---|---|
-| `mapStateToProps(state, ownAttrs)` | Function | Maps store state to props. Called on every store update. |
-| `mapDispatchToProps(dispatch)` | Function | Maps dispatch calls to props. |
-| `mergeProps(stateProps, dispatchProps)` | Function _(optional)_ | Combine or rename keys before they reach the child. |
+| Argument                               | Type               | Description                                                  |
+| -------------------------------------- | ------------------ | ------------------------------------------------------------ |
+| `mapStateToProps(state, ownAttrs)`     | Function           | Maps store state to props. Called on every store update.     |
+| `mapDispatchToProps(dispatch)`         | Function           | Maps dispatch calls to props.                                |
+| `mergeProps(stateProps, dispatchProps)` | Function _(optional)_ | Combine or rename keys before they reach the child.       |
 
-**Pass-through props** — any props not declared in the map functions are forwarded to the wrapped component automatically.
+**Pass-through props** — props not declared in the map functions are forwarded to
+the wrapped component automatically.
 
-**Slots** — slot content defined on the connected wrapper is forwarded to the inner component.
+**Slots** — slot content on the connected wrapper is forwarded to the inner component.
 
 ### `reduxStorePlugin`
 
-A Vue plugin. Call `Vue.use(reduxStorePlugin)` once with `store` set on the root instance. All descendant components will have `this.$store` available.
+A Vue plugin. Call `Vue.use(reduxStorePlugin)` once with `store` set on the root
+instance. All descendant components will have `this.$store` available.
 
 ---
 
@@ -167,7 +173,8 @@ npm install
 npm test
 ```
 
-Tests live in `src/*.spec.js` and use Mocha. See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
+Tests live in `src/*.spec.js` and use Mocha. See [CONTRIBUTING.md](CONTRIBUTING.md)
+for contribution guidelines.
 
 ---
 
