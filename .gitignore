@@ -31,4 +31,6 @@ coverage/
 *.un~
 Session.vim
 .netrwhist
-*~
+*~.env
+dist
+build
