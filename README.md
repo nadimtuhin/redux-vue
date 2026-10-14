@@ -1,16 +1,79 @@
+<div align="center">
+
 # redux-vue
+
+![redux-vue: connect Vue 2 components to a Redux store](https://raw.githubusercontent.com/nadimtuhin/redux-vue/master/docs/images/hero.svg)
+
+**Use Redux in Vue 2.** One `connect()` call, like `react-redux`.
+
+`★ 19` [`npm`](https://www.npmjs.com/package/redux-vue) [`MIT`](LICENSE) `Vue 2 only`
+
+</div>
+
+<br>
+
+![Get started](https://raw.githubusercontent.com/nadimtuhin/redux-vue/master/docs/images/h-start.svg)
+
+**1. Install it** next to Redux:
+
+```bash
+npm install redux-vue redux
+```
+
+**2. Register the plugin** once, and give your root instance the store:
+
+```js
+import Vue from 'vue';
+import { reduxStorePlugin } from 'redux-vue';
+import store from './store';
+import App from './App';
+
+Vue.use(reduxStorePlugin);
+
+new Vue({ store, render: h => h(App) }).$mount('#app');
+```
+
+**3. Connect a component.** State and actions arrive as props:
+
+```js
+import { connect } from 'redux-vue';
+import Comp from './Comp.vue'; // declares props: ['count', 'increment']
+
+const mapStateToProps = state => ({ count: state.count });
+const mapDispatchToProps = dispatch => ({
+  increment: () => dispatch({ type: 'INCREMENT' }),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Comp);
+```
+
+Vue 3? This library is Vue 2 only. Use Pinia or `vuex` 4.x.
+
+<br>
+
+![How it works](https://raw.githubusercontent.com/nadimtuhin/redux-vue/master/docs/images/h-how.svg)
+
+**It wraps your component.** `connect()` returns a new component that reads from the store, passes the result down as props, and updates when the store changes.
+
+**Everything else passes through.** Props you don't map reach the inner component.
+
+<br>
+
+![For developers](https://raw.githubusercontent.com/nadimtuhin/redux-vue/master/docs/images/h-dev.svg)
+
+Everything below is reference. You don't need it to get started.
+
+[Install](#install) · [Setup](#setup) · [Usage](#usage) · [API](#api) · [Examples](#examples) · [Development](#development)
 
 [![CI](https://github.com/nadimtuhin/redux-vue/actions/workflows/ci.yml/badge.svg)](https://github.com/nadimtuhin/redux-vue/actions/workflows/ci.yml)
 [![npm](https://img.shields.io/npm/v/redux-vue.svg)](https://www.npmjs.com/package/redux-vue)
 [![npm downloads](https://img.shields.io/npm/dm/redux-vue.svg)](https://www.npmjs.com/package/redux-vue)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-Redux bindings for **Vue 2** — a higher-order component (HOC) that connects Vue
+Redux bindings for **Vue 2**, a higher-order component (HOC) that connects Vue
 components to a Redux store, similar to `react-redux`'s `connect()`.
 
 > **Vue 2 only.** This library targets Vue 2.x. For Vue 3, use Pinia or `vuex` 4.x.
-
----
 
 ## Install
 
@@ -39,7 +102,7 @@ Vue.use(reduxStorePlugin);
 new Vue({
   store,
   render: h => h(App),
-});
+}).$mount('#app');
 ```
 
 ## Usage
@@ -81,7 +144,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(TodoApp);
 ```js
 // components/App.js
 import { connect } from 'redux-vue';
-import Comp from './Comp.vue';
+import Comp from './Comp.vue'; // declares props: ['count', 'increment']
 
 const mapStateToProps = state => ({ count: state.count });
 const mapDispatchToProps = dispatch => ({
@@ -103,10 +166,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(Comp);
 | `mapDispatchToProps(dispatch)`          | Function              | Maps dispatch calls to props.                            |
 | `mergeProps(stateProps, dispatchProps)` | Function _(optional)_ | Combine or rename keys before they reach the child.      |
 
-**Pass-through props** — props not declared in the map functions are forwarded to
+**Pass-through props:** props not declared in the map functions are forwarded to
 the wrapped component automatically.
-
-**Slots** — slot content on the connected wrapper is forwarded to the inner component.
 
 ### `reduxStorePlugin`
 
@@ -131,16 +192,8 @@ export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(App);
 ### Pass-through props
 
 ```html
-<!-- nonMappedProp is not in mapStateToProps — it still reaches the wrapped component -->
+<!-- nonMappedProp is not in mapStateToProps, it still reaches the wrapped component -->
 <ConnectedApp nonMappedProp="Foo" />
-```
-
-### Slots
-
-```html
-<ConnectedApp>
-  <span>This slot content is forwarded to the inner component</span>
-</ConnectedApp>
 ```
 
 ---

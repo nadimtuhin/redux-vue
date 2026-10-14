@@ -1,0 +1,2 @@
+{ "banners": { "h-start": "GET STARTED", "h-how": "HOW IT WORKS", "h-dev": "FOR DEVELOPERS" },
+  "hero": { "kicker": "OPEN SOURCE · NPM · VUE 2", "title": "redux-vue", "tagline": "Connect Vue 2 components to a Redux store" } }
