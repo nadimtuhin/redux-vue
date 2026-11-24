@@ -14,8 +14,8 @@
   "scripts": {
     "test": "mocha \"./src/**/*.spec.js\" --require @babel/register",
     "test:watch": "npm test -- --watch",
-    "compile": "babel -d lib/ src/",
-    "prepublish": "npm run compile"
+    "compile": "babel -d lib/ src/ --ignore \"src/**/*.spec.js\"",
+    "prepack": "npm run compile"
   },
   "keywords": [
     "vue",
