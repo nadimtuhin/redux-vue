@@ -4,7 +4,7 @@ export default function reduxStorePlugin(Vue, storeId = 'store') {
             const options = this.$options;
             // store injection
             if (options[storeId]) {
-                this.$store = options.store;
+                this.$store = options[storeId];
             } else if (options.parent && options.parent.$store) {
                 this.$store = options.parent.$store;
             }
